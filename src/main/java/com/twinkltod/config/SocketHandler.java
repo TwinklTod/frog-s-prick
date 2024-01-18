@@ -1,4 +1,4 @@
-package com.twinkltod.frogsprick.config;
+package com.twinkltod.config;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
