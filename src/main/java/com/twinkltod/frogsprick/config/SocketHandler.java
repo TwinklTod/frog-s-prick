@@ -1,4 +1,4 @@
-package com.twinkltod.config;
+package com.twinkltod.frogsprick.config;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
@@ -16,9 +16,9 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
-        for (WebSocketSession webSocketSession : sessions) {
-            if (webSocketSession.isOpen() && !session.getId().equals(webSocketSession.getId())) {
-                webSocketSession.sendMessage(message);
+        for (WebSocketSession otherSession : sessions) {
+            if (otherSession.isOpen() && !session.getId().equals(otherSession.getId())) {
+                otherSession.sendMessage(message);
             }
         }
     }
@@ -30,10 +30,10 @@ public class SocketHandler extends TextWebSocketHandler {
 
     // Метод для обработки сигнализации
     public void handleSignalingData(WebSocketSession session, String signalingData) throws IOException {
-        for (WebSocketSession webSocketSession : sessions) {
-            if (webSocketSession.isOpen() && !session.getId().equals(webSocketSession.getId())) {
+        for (WebSocketSession otherSession : sessions) {
+            if (otherSession.isOpen() && !session.getId().equals(otherSession.getId())) {
                 // Отправляем сигнализационные данные другим клиентам
-                webSocketSession.sendMessage(new TextMessage(signalingData));
+                otherSession.sendMessage(new TextMessage(signalingData));
             }
         }
     }
