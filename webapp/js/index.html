@@ -6,9 +6,17 @@
     <title>WebRTC Example</title>
 </head>
 <body>
-<!-- Ваш HTML-код здесь, если необходимо -->
-
-<!-- Подключение скрипта client.js -->
-<script src="js/client.js"></script>
+<video autoplay muted id="localVideo"></video>
+<video autoplay id="remoteVideo"></video>
+<script src="client.js"></script>
+<script>
+    const localVideo = document.getElementById('localVideo');
+    const remoteVideo = document.getElementById('remoteVideo');
+    const peerConnection = initPeerConnection();
+    peerConnection.ontrack = handleAddStream;
+    peerConnection.onicecandidate = handleIceCandidate;
+    peerConnection.onaddstream = handleRemoteStreamAdded;
+    createOffer();
+</script>
 </body>
 </html>
