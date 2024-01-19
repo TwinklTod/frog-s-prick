@@ -1,4 +1,4 @@
-package com.twinkltod.frogsprick.websocket;
+package com.twinkltod.frogsprick;// SocketHandler.java
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
@@ -12,11 +12,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class SocketHandler extends TextWebSocketHandler {
 
-    private final List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+    List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message)
-            throws IOException {
+    public void handleTextMessage(WebSocketSession session, TextMessage message) throws InterruptedException, IOException {
+
         for (WebSocketSession webSocketSession : sessions) {
             if (webSocketSession.isOpen() && !session.getId().equals(webSocketSession.getId())) {
                 webSocketSession.sendMessage(message);
